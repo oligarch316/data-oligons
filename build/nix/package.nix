@@ -36,7 +36,7 @@ let
 
         meta = {
             description = "Personal icons";
-            homepage    = "TODO: github url";
+            homepage    = "https://github.com/oligarch316/data-oligons";
         };
     };
 in
