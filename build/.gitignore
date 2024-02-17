@@ -1,0 +1,8 @@
+# Local build settings
+local.mk
+
+# Font artifacts
+font/
+
+# Nix package artifacts
+package/
