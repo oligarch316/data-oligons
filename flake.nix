@@ -1,5 +1,5 @@
 {
-    description = "Personal icon font";
+    description = "Personal icons";
 
     inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 

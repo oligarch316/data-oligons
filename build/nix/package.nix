@@ -35,7 +35,7 @@ let
         '';
 
         meta = {
-            description = "Personal icon font";
+            description = "Personal icons";
             homepage    = "TODO: github url";
         };
     };
