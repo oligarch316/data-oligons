@@ -1,5 +1,3 @@
-#!/usr/bin/env -S make -f
-
 # ----- Formats
 
 # printf ... <label> <message>
