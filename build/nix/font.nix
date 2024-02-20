@@ -1,4 +1,4 @@
-{ pkgs, source, ... }:
+{ lib, pkgs, source, ... }:
 
 let
     inherit ( pkgs        ) buildNpmPackage fetchFromGitHub;
@@ -17,28 +17,29 @@ let
         };
     };
 
-    drvOligons = mkDerivation {
-        pname       = "oligons";
+    drvFont = mkDerivation {
+        pname       = "oligons-font";
         version     = "0.1.0";
         src         = source;
         buildInputs = [ drvFantasticon ];
         outputs     = [ "out" "dev" "index" ];
 
         phases       = [ "unpackPhase" "buildPhase" "installPhase" ];
-        buildPhase   = "make font";
+        buildPhase   = "make font.build";
         installPhase = ''
             mkdir -p $dev $index $out/share/fonts/truetype
 
-            install build/font/*      $dev
-            install build/font/*.json $index
-            install build/font/*.ttf  $out/share/fonts/truetype
+            install build/font/*            $dev
+            install build/font/oligons.json $index
+            install build/font/oligons.ttf  $out/share/fonts/truetype
         '';
 
         meta = {
-            description = "Personal icons";
+            description = "Personal icon font";
             homepage    = "https://github.com/oligarch316/data-oligons";
+            platforms   = lib.platforms.linux;
         };
     };
 in
 
-drvOligons
+drvFont

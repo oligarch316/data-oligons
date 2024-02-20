@@ -1,3 +1,6 @@
+# TODO:
+# nix derivation show ...
+
 # ----- Default
 .PHONY: nix
 
@@ -12,7 +15,7 @@ clean:: nix.clean
 # ----- Build
 .PHONY: nix.build
 
-nix.build: nix.build.oligons ## Alias for `nix.build.oligons`
+nix.build: nix.build.font ## Alias for `nix.build.font`
 
 nix.build.%: ## Build nix package named <%>
 	$(call inform,Building package '$*')

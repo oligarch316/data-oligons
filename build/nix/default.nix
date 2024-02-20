@@ -3,10 +3,12 @@
 let
     inherit ( pkgs ) callPackage;
 
-    oligonsPkg = callPackage ./package.nix { inherit source; };
+    fontPkg   = pkgs.callPackage ./font.nix   { inherit source; };
+    # TODO: vscodePkg = pkgs.callPackage ./vscode.nix { inherit source; };
 in
 
 {
-    # TODO: Add devShell?
-    pkgs = { default = oligonsPkg; oligons = oligonsPkg; };
+    packages.default = fontPkg;
+    packages.font    = fontPkg;
+    # TODO: packages.vscode  = vscodePkg;
 }
