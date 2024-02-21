@@ -3,15 +3,26 @@
 
     inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    outputs = { self, nixpkgs, ... }:
+    outputs = { nixpkgs, ... }:
         let
             # TODO: Add more systems
             system = "x86_64-linux";
-            pkgs   = import nixpkgs { inherit system; };
-            build  = pkgs.callPackage ./build/nix { source = ./.; };
+            source = ./.;
+
+            load = pkgs: path: pkgs.callPackage path { inherit source; };
         in
         {
-            packages.${system} = build.packages;
-            overlays.default   = _: prev: self.packages.${prev.system};
+            packages.${system} =
+                let
+                    pkgs  = import nixpkgs { inherit system; };
+                    load' = load pkgs;
+                in
+                {
+                    default = load' ./build/nix;
+                    font    = load' ./build/nix/font.nix;
+                    vscode  = load' ./build/nix/vscode.nix;
+                };
+
+            overlays.default = _: prev: { oligons = load prev.pkgs ./build/nix; };
         };
 }

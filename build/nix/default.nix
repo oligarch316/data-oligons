@@ -1,14 +1,29 @@
-{ pkgs, source, ... }:
+{ lib, pkgs, source, ... }:
 
 let
-    inherit ( pkgs ) callPackage;
+    inherit ( pkgs        ) callPackage;
+    inherit ( pkgs.stdenv ) mkDerivation;
 
-    fontPkg   = pkgs.callPackage ./font.nix   { inherit source; };
-    # TODO: vscodePkg = pkgs.callPackage ./vscode.nix { inherit source; };
+    fontPkg   = callPackage ./font.nix { inherit source; };
+    vscodePkg = callPackage ./vscode.nix { inherit source; };
 in
 
-{
-    packages.default = fontPkg;
-    packages.font    = fontPkg;
-    # TODO: packages.vscode  = vscodePkg;
+mkDerivation {
+    pname        = "oligons";
+    version      = "0.1.0";
+    outputs      = [ "out" "font" "vscode" ];
+    phases       = [ "installPhase" ];
+    installPhase = ''
+        mkdir -p $out $font $vscode
+
+        ln -s ${fontPkg}   $out
+        ln -s ${fontPkg}   $font
+        ln -s ${vscodePkg} $vscode
+    '';
+
+    meta = {
+        description = "Personal icons";
+        homepage    = "https://github.com/oligarch316/data-oligons";
+        platforms   = lib.platforms.linux;
+    };
 }

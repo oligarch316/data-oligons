@@ -15,7 +15,7 @@ clean:: nix.clean
 # ----- Build
 .PHONY: nix.build
 
-nix.build: nix.build.font ## Alias for `nix.build.font`
+nix.build: nix.build.default ## Alias for `nix.build.default`
 
 nix.build.%: ## Build nix package named <%>
 	$(call inform,Building package '$*')
